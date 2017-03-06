@@ -3,7 +3,7 @@ var fs = require('fs')
 var url = require('url')
 
 //console.log(Object.keys(http))
-var port = process.env.PORT || 8888;
+var port = process.env.PORT ||3333 ;
 
 var server = http.createServer(function(request, response){
 
@@ -14,6 +14,12 @@ var server = http.createServer(function(request, response){
   //从这里开始看，上面不要看
 
   switch(path){
+    case  '/':
+      var htmlString = fs.readFileSync('./index.html')
+      response.setHeader('Content-Type','text/html')
+      response.end(htmlString)
+      break
+
     case  '/index.html':
       var htmlString = fs.readFileSync('./index.html')
       response.setHeader('Content-Type','text/html')
@@ -31,6 +37,7 @@ var server = http.createServer(function(request, response){
     case '/data.json':
       response.setHeader('Content-Type','application/json')
       response.end('{"name":"frank","age":18}')
+      break
     default:
       response.end('404')
       break
@@ -40,4 +47,4 @@ var server = http.createServer(function(request, response){
 })
 
 server.listen(port)
-console.log('监听 8888 成功')
+console.log('监听 3333 成功')
